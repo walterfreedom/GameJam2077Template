@@ -4,6 +4,7 @@
 
 Bu dosyayı indirip unity de proje olarak açın.
 Demo bölümlerden faydalanabilirsiniz.
+Projeyi sağ üssten "code" butonuna tıklayıp .zip olarak indirin. içindekileri bir dosyaya çıkartıp daha sonra unity hub ile açın.
 
 /wfscripts klasörünün içindeki .cs dosyaları MIT lisansı altındadır. 
 
