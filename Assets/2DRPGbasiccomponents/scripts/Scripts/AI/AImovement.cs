@@ -74,6 +74,7 @@ public class AImovement : MonoBehaviour
 
         AIPath.orientation = OrientationMode.YAxisForward;
         AIPath.enableRotation = false;
+        AIPath.maxSpeed = baseSpeed;
 
         //without this AI starts travelling towards (0,0,0) when he spawns, do not change this
         owner = NPCobject;
@@ -192,11 +193,11 @@ public class AImovement : MonoBehaviour
                 findTarget(GameObjectsInSight, sumlist, canSeeThroughWalls, lastpos);
             }
 
-            else if (Vector2.Distance(NPCobject.transform.position, owner.transform.position) < followdistance / 2)
-            {
-                AIPath.endReachedDistance = combatDistance / 2;
-                isFollowingPlayer = false;
-            }
+            //else if (Vector2.Distance(NPCobject.transform.position, owner.transform.position) < followdistance / 2)
+            //{
+            //    AIPath.endReachedDistance = combatDistance / 2;
+            //    isFollowingPlayer = false;
+            //}
 
         }
     }
@@ -290,7 +291,7 @@ public class AImovement : MonoBehaviour
                                 break;
                             }
 
-                            else if (hit.transform.gameObject.tag == "obstacle")
+                            else if (hit.transform.gameObject.tag == "solid")
                             {
                                 break;
                             }

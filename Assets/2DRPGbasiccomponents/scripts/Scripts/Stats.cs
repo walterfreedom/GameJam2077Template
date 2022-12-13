@@ -20,15 +20,15 @@ public class Stats : MonoBehaviour
     [HideInInspector]
     public int damage;
    
+    [HideInInspector]
     public float speed;
+    [HideInInspector]
     public float basespeed;
-    public int range;
     [HideInInspector]
     public List<Status> statuslist = new List<Status>();
     public List<string> enemylist = new List<string>();
     public bool canAttack = true;
     public float attackspeed=1.0f;
-    [HideInInspector]
     public float hpregen=10;
 
 
@@ -51,6 +51,7 @@ public class Stats : MonoBehaviour
 
     [HideInInspector]
     public float energy = 120;
+    [HideInInspector]
     public int maxenergy = 120;
     [HideInInspector]
     public bool charging = false;

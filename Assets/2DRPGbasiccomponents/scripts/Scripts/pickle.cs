@@ -10,7 +10,9 @@ public class pickle : MonoBehaviour
     public int value = 100;
     public bool infiniteitemspawn;
     public string category;
+    [HideInInspector]
     public int durability = 100;
+    [HideInInspector]
     public List<string> itemperks;
     public int slotindex;
     public string ownerID;

@@ -7,6 +7,7 @@ public class shoopKeeper : MonoBehaviour
 {
     public List<GameObject> inventory;
     public List<GameObject> inventoryPrefabs;
+    public List<GameObject> mercprefabs;
     Button closeshop;
     private void Start()    
     {

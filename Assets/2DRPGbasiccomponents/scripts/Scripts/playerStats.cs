@@ -40,8 +40,11 @@ public class playerStats : MonoBehaviour
     public Sprite selected;
     public Sprite defaultspr;
     public bool skillblock = false;
+    GameObject AIcontrol;
 
     shoopKeeper lastshop;
+    GameObject mercshop;
+    GameObject normalshop;
 
     //ITEM E SHOULD CALL PICKPUTITEM()
     //PALYER ID RESETS
@@ -56,6 +59,9 @@ public class playerStats : MonoBehaviour
         sellmode = gameObject.transform.Find("shopcanvas").Find("sellmode").GetComponent<Button>();
         moneytext = gameObject.transform.Find("Canvas").Find("money").GetComponent<TMP_Text>();
         oxygencanvas = gameObject.transform.Find("Canvas").Find("energybar").Find("bar").gameObject;
+        mercshop = shopcanvas.transform.Find("mercshop").gameObject;
+        normalshop = shopcanvas.transform.Find("normalshop").gameObject;
+        AIcontrol = GameObject.Find("AIcontrol");
         stats = gameObject.GetComponent<Stats>();
         sellmode.onClick.AddListener(setSellmode);
         //gameObject.transform.Find("Canvas").Find("inventory").gameObject.SetActive(false);
@@ -81,16 +87,30 @@ public class playerStats : MonoBehaviour
         selectedslot = inventory[0];
     }
 
+   
+
     private void Update()
     {
         tempImage.transform.position = Input.mousePosition;
         if (Input.GetKeyDown(KeyCode.F))
         {
-            var AIcontrol = GameObject.Find("AIcontrol");
-            AIcontrol.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            followerList[0].GetComponent<AImovement>().followerCommand = true;
-            followerList[0].GetComponent<AImovement>().aIDestination.target = AIcontrol.transform;
-            followerList[0].GetComponent<AImovement>().AIPath.endReachedDistance = 0;
+            if (followerList[0] != null)
+            {
+                AIcontrol.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                followerList[0].GetComponent<SpriteRenderer>().color = Color.blue;
+                followerList[0].GetComponent<AImovement>().followerCommand = true;
+                followerList[0].GetComponent<AImovement>().aIDestination.target = AIcontrol.transform;
+                followerList[0].GetComponent<AImovement>().AIPath.endReachedDistance = 0;
+            }
+            else
+            {
+                followerList.RemoveAt(0);
+                AIcontrol.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                followerList[0].GetComponent<AImovement>().followerCommand = true;
+                followerList[0].GetComponent<AImovement>().aIDestination.target = AIcontrol.transform;
+                followerList[0].GetComponent<AImovement>().AIPath.endReachedDistance = 0;
+            }
+           
         }
         if (Input.GetMouseButtonDown(0)&&!isShopping&&selectedslot.GetComponent<inventorySlot>().storedItems.Count!=0)
         {
@@ -163,6 +183,7 @@ public class playerStats : MonoBehaviour
                 {
                     follower.GetComponent<AImovement>().isFollowingPlayer = !follower.GetComponent<AImovement>().isFollowingPlayer;
                     follower.GetComponent<AImovement>().owner = gameObject;
+                    follower.GetComponent<AImovement>().AIPath.endReachedDistance = 2;
                 }
             }
         }
@@ -458,6 +479,9 @@ public class playerStats : MonoBehaviour
     {
         List<GameObject> ShoppingList = new List<GameObject>();
         ShoppingList.AddRange(lastshop.inventory);
+       
+        List<GameObject> MercList = new List<GameObject>();
+        MercList.AddRange(lastshop.mercprefabs);
 
         //yay shopping! consoooooooom!
         int x = -110;
@@ -468,7 +492,7 @@ public class playerStats : MonoBehaviour
         {
 
             var frame = shopcanvas.transform.Find("tempbutton");
-            var shopping = Instantiate(frame, shopcanvas.transform);
+            var shopping = Instantiate(frame, normalshop.transform);
             stufftodestory.Add(shopping.gameObject);
             shopping.name = "shopbutton" + itemorder;
             shopping.gameObject.active = true;
@@ -485,7 +509,37 @@ public class playerStats : MonoBehaviour
                 x = -110;
             }
         }
+
+       
+
+        foreach (var item in MercList)
+        {
+
+            var frame = shopcanvas.transform.Find("tempbutton");
+            var shopping = Instantiate(frame, mercshop.transform);
+            stufftodestory.Add(shopping.gameObject);
+            shopping.name = "shopbutton" + itemorder;
+            shopping.gameObject.active = true;
+            shopping.Find("Img").GetComponent<Image>().sprite = item.GetComponent<SpriteRenderer>().sprite;
+            shopping.Find("Img").GetComponent<Image>().color = item.GetComponent<SpriteRenderer>().color;
+            shopping.Find("Text (TMP)").GetComponent<TMP_Text>().text = item.GetComponent<Stats>().name;
+            shopping.GetComponent<shopscript>().storedItems.Add(item);
+            shopping.transform.localPosition = new Vector2(x, y);
+            x += 110;
+            itemorder++;
+            if (itemorder % 3 == 1)
+            {
+                y -= 100;
+                x = -110;
+            }
+        }
         shopcanvas.SetActive(!shopcanvas.activeSelf);
+    }
+
+    public void setMercWindowActive()
+    {
+        mercshop.SetActive(!mercshop.activeSelf);
+        normalshop.SetActive(!normalshop.activeSelf);
     }
     public void increaseScore(int scoreincrease)
     {
