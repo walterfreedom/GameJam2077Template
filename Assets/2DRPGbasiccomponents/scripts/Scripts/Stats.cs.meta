@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: fadcf24ee42a2b6428e376ae3765b27b
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - helmet: {instanceID: 0}
+  - body: {instanceID: 0}
+  - feet: {instanceID: 0}
+  - whattodrop: {fileID: 1132888609176238795, guid: afc637f75481ade48a4cbedeff2fef60, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
