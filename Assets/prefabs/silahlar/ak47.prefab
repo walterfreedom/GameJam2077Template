@@ -150,3 +150,4 @@ MonoBehaviour:
   isMelee: 0
   reach: 1
   shotgun: 0
+  audio: {fileID: 8300000, guid: 57126bfd1d00e0845a6ce2983ef2e6bb, type: 3}

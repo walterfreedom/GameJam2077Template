@@ -21654,6 +21654,7 @@ GameObject:
   - component: {fileID: 1740343938348432774}
   - component: {fileID: 1740343938348432775}
   - component: {fileID: 1623121941341439744}
+  - component: {fileID: 8428812679874506131}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -21880,6 +21881,8 @@ MonoBehaviour:
   feet: {fileID: 0}
   whattodrop: {fileID: 0}
   shieldmode: 0
+  playWhenDamaged: {fileID: 0}
+  audio: {fileID: 0}
 --- !u!95 &1623121941341439744
 Animator:
   serializedVersion: 3
@@ -21899,6 +21902,14 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!81 &8428812679874506131
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1623121941341439751}
+  m_Enabled: 1
 --- !u!1 &1623121941915823638
 GameObject:
   m_ObjectHideFlags: 0
@@ -21909,7 +21920,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1623121941915823850}
   - component: {fileID: 1623121941915823637}
-  - component: {fileID: 1623121941915823639}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -21974,14 +21984,6 @@ Camera:
   m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &1623121941915823639
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1623121941915823638}
-  m_Enabled: 1
 --- !u!1 &1740343936983445893
 GameObject:
   m_ObjectHideFlags: 0

@@ -251,12 +251,12 @@ MonoBehaviour:
   name: coronel
   faction: 
   race: 
+  baseThreat: 10
   health: 250
   maxhealth: 250
   damage: 50
   speed: 0
   basespeed: 0
-  range: 0
   enemylist: []
   canAttack: 1
   attackspeed: 1
@@ -281,6 +281,8 @@ MonoBehaviour:
   feet: {fileID: 0}
   whattodrop: {fileID: 0}
   shieldmode: 0
+  playWhenDamaged: {fileID: 8300000, guid: 445eb3568fb93344eb6780a6ed31935a, type: 3}
+  audio: {fileID: 0}
 --- !u!114 &3163655660038247716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,7 +299,6 @@ MonoBehaviour:
   armor: 0
   attackSpeed: 1
   damage: 5
-  range: 1
   isranged: 0
   attackCooldown: 0
   baseThreat: 10
