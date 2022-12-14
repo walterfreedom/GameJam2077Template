@@ -128,7 +128,8 @@ public class playerStats : MonoBehaviour
                 var mscript = gameObject.GetComponent<movement>();
                 var gun = selectedslot.GetComponent<inventorySlot>().storedItems[0];
                 gun.GetComponent<weaponstats>().shoot(stats.enemylist,gameObject,mscript.gun.transform);
-                gameObject.GetComponent<movement>().gun.GetComponent<AudioSource>().Play();
+                if (gun.GetComponent<weaponstats>().audio != null)
+                    gameObject.GetComponent<movement>().gun.GetComponent<AudioSource>().Play();
 
                 //stats.attackset();
 
@@ -138,7 +139,8 @@ public class playerStats : MonoBehaviour
                 var mscript = gameObject.GetComponent<movement>();
                 var gun = selectedslot.GetComponent<inventorySlot>().storedItems[0];
                 gun.GetComponent<weaponstats>().swing(stats.enemylist, gameObject, mscript.gun.transform);
-                gameObject.GetComponent<movement>().gun.GetComponent<AudioSource>().Play();
+                if(gun.GetComponent<weaponstats>().audio!=null)
+                    gameObject.GetComponent<movement>().gun.GetComponent<AudioSource>().Play();
             }
             else if (selectedslot.GetComponent<inventorySlot>().storedItems[0].TryGetComponent<car>(out car car))
             {
