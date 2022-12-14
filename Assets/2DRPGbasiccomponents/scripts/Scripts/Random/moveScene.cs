@@ -10,20 +10,20 @@ public class moveScene : MonoBehaviour
     {
         SceneManager.LoadScene(scene);
 
-        var player = GameObject.Find("Player");
-        var manager = GameObject.Find("Astarpath");
-        DontDestroyOnLoad(player);
-        DontDestroyOnLoad(manager);
-        DontDestroyOnLoad(GameObject.Find("WalterFreedom"));
-        DontDestroyOnLoad(GameObject.Find("EventSystem"));
-        foreach (var follower in player.GetComponent<playerStats>().followerList)
-        {
-            DontDestroyOnLoad(follower);
-        }
+        //var player = GameObject.Find("Player");
+        //var manager = GameObject.Find("Astarpath");
+        //DontDestroyOnLoad(player);
+        //DontDestroyOnLoad(manager);
+        //DontDestroyOnLoad(GameObject.Find("WalterFreedom"));
+        //DontDestroyOnLoad(GameObject.Find("EventSystem"));
+        //foreach (var follower in player.GetComponent<playerStats>().followerList)
+        //{
+        //    DontDestroyOnLoad(follower);
+        //}
     
-        foreach (var go in GameObject.FindObjectsOfType<dontDestroy>())
-        {
-            DontDestroyOnLoad(go);
-        }
+        //foreach (var go in GameObject.FindObjectsOfType<dontDestroy>())
+        //{
+        //    DontDestroyOnLoad(go);
+        //}
     }
 }

@@ -22,6 +22,8 @@ public class Bullet : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
         }
         audioSource.clip = audio;
+        audioSource.maxDistance = 10f;
+        audioSource.rolloffMode = AudioRolloffMode.Linear;
         audioSource.spatialBlend = 1.0f;
         audioSource.Play();
 

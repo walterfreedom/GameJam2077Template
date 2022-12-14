@@ -11,6 +11,8 @@ public class areaEffects : MonoBehaviour
     public bool heal = false;
     public AudioClip Audio;
     AudioSource asource;
+    public GameObject spawn;
+    public GameObject location;
 
     Dictionary<GameObject,List<Status>> toremovelist = new Dictionary<GameObject, List<Status>>();
 
@@ -47,6 +49,19 @@ public class areaEffects : MonoBehaviour
             if (heal)
                 stats.hpregen += 30;
 
+            if(spawn!= null && collision.tag=="Player")
+            {
+                if (location != null)
+                {
+                    var spawnobject = Instantiate(spawn);
+                    spawnobject.transform.position = location.transform.position;
+                }
+                else
+                {
+                    var spawnobject = Instantiate(spawn);
+                    spawnobject.transform.position = transform.position;
+                }
+            }
         }
     }
 

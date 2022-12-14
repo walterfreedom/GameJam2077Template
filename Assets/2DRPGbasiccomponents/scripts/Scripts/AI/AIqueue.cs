@@ -6,6 +6,7 @@ public class AIqueue : MonoBehaviour
 {
     public List<GameObject> queue;
     public List<GameObject> players;
+    public int queuelimit = 20;
 
 
     private void Update()
@@ -25,7 +26,7 @@ public class AIqueue : MonoBehaviour
     {
         if (queue.Count != 0)
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < queuelimit; i++)
             {
                 if (queue.Count != 0)
                 {

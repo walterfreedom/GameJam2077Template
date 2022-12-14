@@ -251,9 +251,18 @@ public class Stats : MonoBehaviour
         }
         else
         {
-            droploot(gameObject.transform.position);
-            Destroy(ItemToDealDamage.gameObject);
-          
+            if (gameObject.CompareTag("Player"))
+            {
+                transform.position = new Vector3(0, 0, 0);
+                health = maxhealth;
+                
+            }
+            else
+            {
+                droploot(gameObject.transform.position);
+                Destroy(ItemToDealDamage.gameObject);
+            }
+            
         }
     }
 
