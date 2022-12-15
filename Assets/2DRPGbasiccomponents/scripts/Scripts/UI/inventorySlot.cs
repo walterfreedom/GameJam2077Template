@@ -101,6 +101,8 @@ public class inventorySlot : MonoBehaviour
             {
                 if (storedItems[0].GetComponent<pickle>().itemname== pstats.tempitems[0].GetComponent<pickle>().itemname)
                 {
+
+                    print("MERABA");
                     if (storedItems[0].GetComponent<pickle>().stacksize >= pstats.tempitems.Count + storedItems.Count)
                     {
                         additem(pstats.tempitems);
@@ -156,11 +158,44 @@ public class inventorySlot : MonoBehaviour
         else
         {
 
-            if (storedItems.Count != 0)
+            if (storedItems.Count != 0 && !pstats.isShopping)
             {
-                pstats.templistAdd(storedItems);
-                clearSlot();
+               
+                if (!pstats.isShopping)
+                {
+                    pstats.templistAdd(storedItems);
+                    clearSlot();
+                }
+                else
+                {
+
+                    //TODO
+                    var itemcount = gameObject.transform.Find("Text (TMP)");
+                    int previousnum = int.Parse(itemcount.gameObject.GetComponent<TMP_Text>().text);
+                    if (previousnum > 1)
+                    {
+                        itemcount.gameObject.GetComponent<TMP_Text>().text = (previousnum - 1).ToString();
+                    }
+                    else
+                    {
+                        itemcount.gameObject.GetComponent<TMP_Text>().text = "";
+                    }
+
+                    gameObject.transform.root.GetComponent<playerStats>().money += storedItems[0].GetComponent<pickle>().value;
+                    gameObject.transform.root.GetComponent<playerStats>().updateMoney();
+                    Destroy(storedItems[0]);
+
+                    storedItems.RemoveAt(0);
+
+
+                    if (storedItems.Count < 1)
+                    {
+                        gameObject.transform.Find("item").GetComponent<Image>().sprite = default;
+                        gameObject.transform.Find("item").GetComponent<Image>().color = Color.white;
+                    }
+                }
             }
+            
         }
 
         //print("walter");

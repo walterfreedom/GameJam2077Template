@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Stats : MonoBehaviour
@@ -255,6 +256,7 @@ public class Stats : MonoBehaviour
             {
                 transform.position = new Vector3(0, 0, 0);
                 health = maxhealth;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                 
             }
             else
@@ -265,7 +267,7 @@ public class Stats : MonoBehaviour
             
         }
     }
-
+    
     void droploot(Vector2 position)
     {
         var drop = Instantiate(whattodrop, position, gameObject.transform.rotation);

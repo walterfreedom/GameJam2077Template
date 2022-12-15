@@ -12,7 +12,7 @@ public class playerStats : MonoBehaviour
     public List<blueprint> crafting;
 
     public int money=1000;
-    public bool isShopping;
+    public bool isShopping = false;
     GameObject player;
     List<GameObject> inventoryslots;
     Button closeshop;
@@ -45,6 +45,9 @@ public class playerStats : MonoBehaviour
     shoopKeeper lastshop;
     GameObject mercshop;
     GameObject normalshop;
+    public double attackCooldown = 0;
+    double attackspeed = 1;
+    bool mb0down = false;
 
     //ITEM E SHOULD CALL PICKPUTITEM()
     //PALYER ID RESETS
@@ -112,8 +115,10 @@ public class playerStats : MonoBehaviour
             }
            
         }
+        
         if (Input.GetMouseButtonDown(0)&&!isShopping&&selectedslot.GetComponent<inventorySlot>().storedItems.Count!=0)
         {
+            mb0down = true;
             if(selectedslot.GetComponent<inventorySlot>().storedItems[0].TryGetComponent<blueprint>(out blueprint blueprint))
             {
                 crafting.Add(blueprint);
@@ -147,6 +152,7 @@ public class playerStats : MonoBehaviour
                 Vector3 mousePosition = camera.ScreenToWorldPoint(Input.mousePosition);
                 mousePosition.z = 0;
                 selectedslot.GetComponent<inventorySlot>().dropItem(mousePosition);
+                car.enemylist = gameObject.GetComponent<Stats>().enemylist;
                 GameObject.Find("dronecam").GetComponent<camerascript>().target = car.gameObject;
             }
             //else
@@ -157,6 +163,28 @@ public class playerStats : MonoBehaviour
             //}
 
         }
+        if (Input.GetMouseButtonUp(0) && !isShopping && selectedslot.GetComponent<inventorySlot>().storedItems.Count != 0)
+        {
+            mb0down = false;
+        }
+
+
+        #region mousedown
+        //MOUSE DOWN
+        if (mb0down &&  !isShopping && selectedslot.GetComponent<inventorySlot>().storedItems.Count != 0) {
+            if (selectedslot.GetComponent<inventorySlot>().storedItems[0].GetComponent<pickle>().category == "weapon" && attackCooldown < 0.01)
+            {
+                //this will be attack script for player
+                var mscript = gameObject.GetComponent<movement>();
+                var gun = selectedslot.GetComponent<inventorySlot>().storedItems[0];
+                gun.GetComponent<weaponstats>().shoot(stats.enemylist, gameObject, mscript.gun.transform);
+                attackCooldown = 1 / attackspeed;
+                if (gun.GetComponent<weaponstats>().audio != null)
+                    gameObject.GetComponent<movement>().gun.GetComponent<AudioSource>().Play();
+            }
+        }
+        #endregion
+
         else if (Input.GetMouseButtonDown(1) && !isShopping && selectedslot.GetComponent<inventorySlot>().storedItems.Count != 0)
         {
             if (selectedslot.GetComponent<inventorySlot>().storedItems[0].GetComponent<pickle>().category == "weapon" && stats.canAttack)
@@ -184,9 +212,13 @@ public class playerStats : MonoBehaviour
             {
                 foreach(var follower in followerList)
                 {
-                    follower.GetComponent<AImovement>().isFollowingPlayer = !follower.GetComponent<AImovement>().isFollowingPlayer;
-                    follower.GetComponent<AImovement>().owner = gameObject;
-                    follower.GetComponent<AImovement>().AIPath.endReachedDistance = 2;
+                    if (follower != null)
+                    {
+                        follower.GetComponent<AImovement>().isFollowingPlayer = !follower.GetComponent<AImovement>().isFollowingPlayer;
+                        follower.GetComponent<AImovement>().owner = gameObject;
+                        follower.GetComponent<AImovement>().AIPath.endReachedDistance = 2;
+                    }
+                   
                 }
             }
         }
@@ -274,7 +306,7 @@ public class playerStats : MonoBehaviour
 
 
         }
-        if (Input.GetKeyDown("i"))
+        if (Input.GetKeyDown("i") && !isShopping)
         {
             if (!inventoryMode)
             {
@@ -288,6 +320,7 @@ public class playerStats : MonoBehaviour
             }
            
         }
+      
 
         if (Input.GetKeyDown("q") && !skillblock)
         {
@@ -368,6 +401,8 @@ public class playerStats : MonoBehaviour
             }
             
         }
+        if(attackCooldown>0)
+        attackCooldown -= Time.deltaTime;
     }
     public void closeShop()
     {
@@ -459,6 +494,7 @@ public class playerStats : MonoBehaviour
                 gameObject.GetComponent<movement>().gun.GetComponent<AudioSource>().clip = storeditm[0].GetComponent<weaponstats>().audio;
                 gameObject.GetComponent<movement>().gun.GetComponent<SpriteRenderer>().flipX = true;
                 stats.damage = storeditm[0].GetComponent<weaponstats>().damage;
+                attackspeed = storeditm[0].GetComponent<weaponstats>().attackspeed;
             }
         }
 
@@ -476,12 +512,12 @@ public class playerStats : MonoBehaviour
             tempImage.GetComponent<Image>().color = itemstoadd[0].GetComponent<SpriteRenderer>().color;
             tempImage.active = true;
         }
-        
+        print(tempitems.Count);
     }
 
-    
     public void openShop()
     {
+        isShopping = true;
         List<GameObject> ShoppingList = new List<GameObject>();
         ShoppingList.AddRange(lastshop.inventory);
        

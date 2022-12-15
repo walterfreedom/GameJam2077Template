@@ -3,14 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class car : MonoBehaviour
-{
-    public Rigidbody2D rb;
+{   
+    Rigidbody2D rb;
     public int drip = 0;
-    public AudioClip whatsappsoundeffect;
+    public AudioClip audioClip;
     float speed = 6;
     float turnspeed = 90;
     float speedmod = 1;
     public bool willmove = false;
+    public List<string> enemylist;
+
+    private void Start()
+    {
+        if(TryGetComponent<Rigidbody2D>(out Rigidbody2D rbody))
+        {
+            rb = rbody;
+        }
+        else
+        {
+            rb = gameObject.AddComponent<Rigidbody2D>();
+        }
+    }
     void Update()
     {
         if (willmove)
@@ -51,7 +64,7 @@ public class car : MonoBehaviour
             stats.DamageOrKill(5000, collision.gameObject, 1, gameObject);
         }
         if(drip<=3)
-        gameObject.GetComponent<AudioSource>().PlayOneShot(whatsappsoundeffect);
+        gameObject.GetComponent<AudioSource>().PlayOneShot(audioClip);
         else if(drip==4)
         {
             gameObject.GetComponent<AudioSource>().Play();

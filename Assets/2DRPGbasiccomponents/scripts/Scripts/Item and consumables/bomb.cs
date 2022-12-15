@@ -6,6 +6,7 @@ public class bomb : MonoBehaviour
 {
     public int damage = 50;
     public GameObject spawns = null;
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.TryGetComponent<Stats>(out Stats stats))
@@ -26,6 +27,17 @@ public class bomb : MonoBehaviour
                     stats2.DamageOrKill(damage, collision.gameObject, 0, gameObject);
                 }
                 StartCoroutine(toDestroy());
+            }
+        }
+        else if (TryGetComponent<car>(out car car))
+        {
+            if (car.enemylist.Contains(collision.gameObject.tag))
+            {
+                if (collision.gameObject.TryGetComponent<Stats>(out Stats stats2))
+                {
+                    stats2.DamageOrKill(damage, collision.gameObject, 0, gameObject);
+                    StartCoroutine(toDestroy());
+                }
             }
         }
     }

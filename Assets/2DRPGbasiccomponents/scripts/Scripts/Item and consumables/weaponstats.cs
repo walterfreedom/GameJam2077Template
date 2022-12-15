@@ -7,11 +7,13 @@ using Pathfinding;
 public class weaponstats: MonoBehaviour
 {
     public int damage = 10;
+    public double attackspeed=1;
     public GameObject bullet;
     public bool isMelee = false;
     public int reach=1;
     GameObject objecttolarp;
     public bool shotgun;
+    
     public AudioClip audio;
 
 
