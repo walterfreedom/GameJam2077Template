@@ -155,12 +155,12 @@ public class playerStats : MonoBehaviour
                 car.enemylist = gameObject.GetComponent<Stats>().enemylist;
                 GameObject.Find("dronecam").GetComponent<camerascript>().target = car.gameObject;
             }
-            //else
-            //{
-            //    Vector3 mousePosition = camera.ScreenToWorldPoint(Input.mousePosition);
-            //    mousePosition.z = 0;
-            //    selectedslot.GetComponent<inventorySlot>().dropItem(mousePosition);
-            //}
+            else
+            {
+                Vector3 mousePosition = camera.ScreenToWorldPoint(Input.mousePosition);
+                mousePosition.z = 0;
+                selectedslot.GetComponent<inventorySlot>().dropItem(mousePosition);
+            }
 
         }
         if (Input.GetMouseButtonUp(0) && !isShopping && selectedslot.GetComponent<inventorySlot>().storedItems.Count != 0)
@@ -271,17 +271,21 @@ public class playerStats : MonoBehaviour
                     lastchest.closeChest();
                     lastchest = null;
                 }
-                else  if (hit.transform.gameObject.TryGetComponent<chest>(out chest chest))
-                {
-                    chest.openChest();
-                    lastchest = chest;
-                }
+                //else  if (hit.transform.gameObject.TryGetComponent<chest>(out chest chest))
+                //{
+                //    chest.openChest();
+                //    lastchest = chest;
+                //}
                 
                 else if(hit.transform.TryGetComponent<upgradeBase>(out upgradeBase upgradeBase))
                 {
                     upgradeBase.canvasToggle();
                 }
 
+                else if (hit.transform.gameObject.TryGetComponent<Iinteractable>(out Iinteractable iinteractable))
+                {
+                    iinteractable.interactionTrigger(gameObject);
+                }
 
                 else if (hit.transform.gameObject.TryGetComponent<shoopKeeper>(out shoopKeeper shop))
                 {

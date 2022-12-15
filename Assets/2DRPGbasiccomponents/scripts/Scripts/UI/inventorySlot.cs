@@ -158,7 +158,7 @@ public class inventorySlot : MonoBehaviour
         else
         {
 
-            if (storedItems.Count != 0 && !pstats.isShopping)
+            if (storedItems.Count != 0)
             {
                
                 if (!pstats.isShopping)
@@ -169,7 +169,7 @@ public class inventorySlot : MonoBehaviour
                 else
                 {
 
-                    //TODO
+                    print("SOLD!");
                     var itemcount = gameObject.transform.Find("Text (TMP)");
                     int previousnum = int.Parse(itemcount.gameObject.GetComponent<TMP_Text>().text);
                     if (previousnum > 1)
@@ -190,8 +190,7 @@ public class inventorySlot : MonoBehaviour
 
                     if (storedItems.Count < 1)
                     {
-                        gameObject.transform.Find("item").GetComponent<Image>().sprite = default;
-                        gameObject.transform.Find("item").GetComponent<Image>().color = Color.white;
+                        clearSlot();
                     }
                 }
             }
@@ -292,8 +291,7 @@ public class inventorySlot : MonoBehaviour
 
                 if (storedItems.Count < 1)
                 {
-                    gameObject.transform.Find("item").GetComponent<Image>().sprite = default;
-                    gameObject.transform.Find("item").GetComponent<Image>().color = Color.white;
+                    clearSlot();
                 }
             }
         }

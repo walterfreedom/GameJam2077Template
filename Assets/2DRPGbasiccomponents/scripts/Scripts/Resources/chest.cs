@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class chest : MonoBehaviour
+public class chest : MonoBehaviour , Iinteractable
 {
 
     public List<chestdata> storeditems=new List<chestdata>();
@@ -174,6 +174,12 @@ public class chest : MonoBehaviour
         ////        }
         ////    }
 
+    }
+
+    public void interactionTrigger(GameObject gameobject)
+    {
+        openChest();
+        gameobject.GetComponent<playerStats>().lastchest = this;
     }
 }
 

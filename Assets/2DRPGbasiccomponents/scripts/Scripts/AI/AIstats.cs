@@ -26,7 +26,7 @@ public class AIstats : MonoBehaviour
     public GameObject targetedobject;
     public GameObject healthbar;
     Transform anchor;
-    public bool BLACKEAGLESPECIAL=false;
+    public bool shotgun=false;
 
     private void Start()
     {
@@ -75,7 +75,7 @@ public class AIstats : MonoBehaviour
             Vector3 shootdirection = (enemy.transform.position - gameObject.transform.position).normalized;
             float angle = Mathf.Atan2(shootdirection.x, shootdirection.y) * Mathf.Rad2Deg;
             gun.transform.eulerAngles = new Vector3(0, 180, angle);
-            if (BLACKEAGLESPECIAL)
+            if (shotgun)
             {
                 angle -= 20;
                 for(int j =0; j < 3; j++)

@@ -41,6 +41,7 @@ public class AImovement : MonoBehaviour
     public bool isFollowingPlayer = false;
 
     public bool wandering= false;
+    public bool flip2 = false;
    
     SpriteRenderer renderer;
     AIqueue AIqueue;
@@ -129,16 +130,21 @@ public class AImovement : MonoBehaviour
         else
         {
             var a = astarAI.destination.x - lastpos.x;
-            if (a < 0f)
+            print(a + gameObject.name);
+            if (a != 0)
             {
-                renderer.flipX = true;
-                lastpos.x = gameObject.transform.position.x;
+                      if (a < 0f)
+                {
+                    renderer.flipX = !flip2;
+                    lastpos.x = gameObject.transform.position.x;
+                }
+                else
+                {
+                    renderer.flipX = flip2;
+                    lastpos.x = gameObject.transform.position.x;
+                }
             }
-            else
-            {
-                renderer.flipX = false;
-                lastpos.x = gameObject.transform.position.x;
-            }
+            lastpos.x = gameObject.transform.position.x;
         }
         #endregion
 

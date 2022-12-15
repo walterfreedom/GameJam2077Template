@@ -11,6 +11,7 @@ public class Bullet : MonoBehaviour
     bool nothit = true;
     public AudioSource audioSource;
     public AudioClip audio;
+    public bool wallblock = false;
     private void Start()
     {
         gameObject.GetComponent<Rigidbody2D>().velocity=transform.up*20;
@@ -50,13 +51,13 @@ public class Bullet : MonoBehaviour
                 }
             }
 
-            //if(collision.TryGetComponent<Tilemap>(out Tilemap tilemap) && collision.tag == "Obstacle")
-            //{
+        if (collision.TryGetComponent<Tilemap>(out Tilemap tilemap) && collision.tag == "solid" && wallblock)
+        {
             //tilemap.SetTile(new Vector3Int((int)transform.position.x, (int)transform.position.y, 0), null);
-            //Destroy(gameObject);
-            //}
+            Destroy(gameObject);
+        }
 
-            else if (collision.TryGetComponent<basicDestructable>(out basicDestructable basicd))
+        else if (collision.TryGetComponent<basicDestructable>(out basicDestructable basicd))
             {
             basicd.damageordestroy(damage);
            

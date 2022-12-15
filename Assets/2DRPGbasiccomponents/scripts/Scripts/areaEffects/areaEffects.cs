@@ -13,6 +13,7 @@ public class areaEffects : MonoBehaviour
     AudioSource asource;
     public GameObject spawn;
     public GameObject location;
+    public bool destroyafteruse;
 
     Dictionary<GameObject,List<Status>> toremovelist = new Dictionary<GameObject, List<Status>>();
 
@@ -63,6 +64,9 @@ public class areaEffects : MonoBehaviour
                 }
             }
         }
+
+        if (destroyafteruse)
+            Destroy(gameObject);
     }
 
     private void OnTriggerExit2D(Collider2D collision)

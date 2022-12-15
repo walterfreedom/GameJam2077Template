@@ -57,19 +57,43 @@ public class car : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.TryGetComponent<Stats>(out Stats stats))
+        if (enemylist != null)
         {
-            if (stats.health < 5000)
-                drip++;
-            stats.DamageOrKill(5000, collision.gameObject, 1, gameObject);
+            if (enemylist.Contains(collision.transform.tag))
+            {
+                if (collision.gameObject.TryGetComponent<Stats>(out Stats stats))
+                {
+                    if (stats.health < 5000)
+                        drip++;
+                    stats.DamageOrKill(5000, collision.gameObject, 1, gameObject);
+                }
+                if (drip <= 3)
+                    gameObject.GetComponent<AudioSource>().PlayOneShot(audioClip);
+                else if (drip == 4)
+                {
+                    gameObject.GetComponent<AudioSource>().Play();
+                    speed = 16;
+                }
+            }
+          
         }
-        if(drip<=3)
-        gameObject.GetComponent<AudioSource>().PlayOneShot(audioClip);
-        else if(drip==4)
+        else
         {
-            gameObject.GetComponent<AudioSource>().Play();
-            speed = 16;
+            if (collision.gameObject.TryGetComponent<Stats>(out Stats stats))
+            {
+                if (stats.health < 5000)
+                    drip++;
+                stats.DamageOrKill(5000, collision.gameObject, 1, gameObject);
+            }
+            if (drip <= 3)
+                gameObject.GetComponent<AudioSource>().PlayOneShot(audioClip);
+            else if (drip == 4)
+            {
+                gameObject.GetComponent<AudioSource>().Play();
+                speed = 16;
+            }
         }
+     
 
     }
 
