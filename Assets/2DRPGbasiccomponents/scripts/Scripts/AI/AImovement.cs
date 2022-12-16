@@ -269,9 +269,44 @@ public class AImovement : MonoBehaviour
             {
                 if (canseethroughwalls)
                 {
-                    //targetObject = getClosest(visibleObjectList);
-                    lastpos = getClosest(DetectedObjects).transform.position;
-                    aIDestination.target = getClosest(DetectedObjects).transform;
+                    List<GameObject> visibleObjectList = new List<GameObject>();
+
+
+                    foreach (GameObject detectedObject in DetectedObjects)
+                    {
+                        //you changed this to vector 2, if breaks turn back to v3
+                        Vector2 source = NPCobject.transform.position;
+                        Vector2 dobject = detectedObject.transform.position;
+                        Vector2 target = dobject - source;
+                        RaycastHit2D[] hits = Physics2D.RaycastAll(source, target, range);
+                        foreach (var hit in hits)
+                        {
+                            //checks if the gameobject is part of targets list. If it is, they will be added to visibleObjectList
+                            //and then it will find the closest one, and return it 
+                            if (hit.transform.gameObject.tag == tags[0])
+                            {
+                                //tags.Contains(hit.transform.gameObject.tag)
+                                visibleObjectList.Add(hit.transform.gameObject);
+                                break;
+                            }
+                        }
+                    }
+                    //finds the closest one
+                    if (visibleObjectList.Count != 0)
+                    {
+                        //this exist so AI wont attack when it doesnt have any enemy in range
+                        aIDestination.target = getClosest(DetectedObjects).transform;
+
+
+                        lastpos = aIDestination.target.transform.position;
+
+                        a = false;
+                    }
+                    else
+                    {
+                        //This wasted my 4 hours, I WILL NEVER FORGET THIS. UNACCEPTABLE!!!!!!!!
+                        tags.RemoveAt(0);
+                    }
                 }
                 else
                 {
