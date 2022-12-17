@@ -12,7 +12,7 @@ public class AIstats : MonoBehaviour
     public int armor;
     public double attackSpeed=1;
     public int damage=5;
-    public float meleerange;
+    public float meleerange=1;
     public bool isranged = false;
     public double attackCooldown=0;
     public float baseThreat=10;

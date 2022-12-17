@@ -234,6 +234,7 @@ MonoBehaviour:
   agressiveMode: 0
   isFollowingPlayer: 0
   wandering: 0
+  flip2: 0
   followerCommand: 0
   currentbehaviour: default
 --- !u!114 &3163655660038247724
@@ -282,7 +283,7 @@ MonoBehaviour:
   feet: {fileID: 0}
   whattodrop: {fileID: 0}
   shieldmode: 0
-  playWhenDamaged: {fileID: 8300000, guid: 445eb3568fb93344eb6780a6ed31935a, type: 3}
+  playWhenDamaged: {fileID: 8300000, guid: 3257a0f63ada5ff4b91b7c579942cb38, type: 3}
   audio: {fileID: 0}
 --- !u!114 &3163655660038247716
 MonoBehaviour:
@@ -300,6 +301,7 @@ MonoBehaviour:
   armor: 0
   attackSpeed: 1
   damage: 5
+  meleerange: 0
   isranged: 0
   attackCooldown: 0
   baseThreat: 10
@@ -310,7 +312,7 @@ MonoBehaviour:
   hasenemyinrange: 0
   targetedobject: {fileID: 0}
   healthbar: {fileID: 0}
-  BLACKEAGLESPECIAL: 0
+  shotgun: 0
 --- !u!50 &5005820202059234510
 Rigidbody2D:
   serializedVersion: 4

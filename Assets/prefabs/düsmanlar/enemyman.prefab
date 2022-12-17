@@ -123,6 +123,7 @@ MonoBehaviour:
   agressiveMode: 0
   isFollowingPlayer: 0
   wandering: 0
+  flip2: 0
   followerCommand: 0
   currentbehaviour: default
 --- !u!114 &3860685488772909508
@@ -141,6 +142,7 @@ MonoBehaviour:
   armor: 0
   attackSpeed: 1
   damage: 500
+  meleerange: 1
   isranged: 0
   attackCooldown: 0
   baseThreat: 10
@@ -151,7 +153,7 @@ MonoBehaviour:
   hasenemyinrange: 0
   targetedobject: {fileID: 0}
   healthbar: {fileID: 0}
-  BLACKEAGLESPECIAL: 0
+  shotgun: 0
 --- !u!114 &3860685488772909509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -562,6 +564,7 @@ MonoBehaviour:
   Audio: {fileID: 0}
   spawn: {fileID: 0}
   location: {fileID: 0}
+  destroyafteruse: 0
 --- !u!1001 &3860685488727020638
 PrefabInstance:
   m_ObjectHideFlags: 0

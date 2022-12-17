@@ -200,7 +200,6 @@ public class Stats : MonoBehaviour
         }
         else
         {
-            Debug.Log("ahmet");
             gameObject.GetComponent<AImovement>().AIPath.maxSpeed*= amount;
         }
     }

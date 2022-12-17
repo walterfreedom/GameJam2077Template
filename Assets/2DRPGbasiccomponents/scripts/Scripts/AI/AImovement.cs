@@ -96,10 +96,21 @@ public class AImovement : MonoBehaviour
         AIPath.enableRotation = false;
         AIPath.maxSpeed = baseSpeed;
         AIPath.gravity = new Vector3(0, 0, 0);
-
-        gun = gameObject.transform.Find("gun").gameObject;
-        if (gun != null)
-            firstxofgun = transform.position.x - gun.transform.position.x  ;
+        if(TryGetComponent<AIstats>(out AIstats aIstats))
+        {
+            if (aIstats.isranged)
+            {
+                try
+                {
+                    gun = gameObject.transform.Find("gun").gameObject;
+                }
+                catch { }
+                if (gun != null)
+                    firstxofgun = transform.position.x - gun.transform.position.x;
+            }
+         
+        }
+       
 
         //without this AI starts travelling towards (0,0,0) when he spawns, do not change this
         owner = NPCobject;
