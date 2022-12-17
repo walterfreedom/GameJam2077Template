@@ -99,8 +99,12 @@ public class Stats : MonoBehaviour
         GameObject.Find("Astarpath").GetComponent<savesystem>().saveables2.Add(gameObject);
         GameObject.Find("Astarpath").GetComponent<savesystem>().ids.Add(id);
         GameObject.Find("Astarpath").GetComponent<savesystem>().saveables.Add(id,gameObject);
-      
-        healthbar = transform.Find("Canvas").Find("healthbar").gameObject;
+
+        try {
+            healthbar = transform.Find("Canvas").Find("healthbar").gameObject;
+        }
+        catch { }
+       
         if(audio==null)
         {
             audio = gameObject.AddComponent<AudioSource>();
@@ -232,10 +236,14 @@ public class Stats : MonoBehaviour
 
                 Status a = new Status("stun", 1, 1);
                 statuslist.Add(a);
-                var bar = healthbar.transform.Find("bar");
-                healthbar.gameObject.active = true;
-                bar.GetComponent<Slider>().value = ((float)health / (float)maxhealth) * 100.0f;
-               
+               if(healthbar!= null)
+                {
+                    var bar = healthbar.transform.Find("bar");
+                    healthbar.gameObject.active = true;
+                    bar.GetComponent<Slider>().value = ((float)health / (float)maxhealth) * 100.0f;
+                }
+                  
+               if(audio!=null)
                 if (!audio.isPlaying)
                 {
                     audio.clip = playWhenDamaged;
@@ -282,13 +290,17 @@ public class Stats : MonoBehaviour
         if (health + str < maxhealth)
         {
             health += str;
-            var bar = healthbar.transform.Find("bar");
-            bar.GetComponent<Slider>().value = ((float)health / (float)maxhealth) * 100.0f;
+            if (healthbar != null)
+            {
+                var bar = healthbar.transform.Find("bar");
+                bar.GetComponent<Slider>().value = ((float)health / (float)maxhealth) * 100.0f;
+            }
+          
         }
         else
         {
             health = maxhealth;
-            if(gameObject.tag!="Player")
+            if(gameObject.tag!="Player" && healthbar != null)
             healthbar.active = false;
         }
     }

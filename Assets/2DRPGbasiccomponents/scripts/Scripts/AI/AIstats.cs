@@ -12,6 +12,7 @@ public class AIstats : MonoBehaviour
     public int armor;
     public double attackSpeed=1;
     public int damage=5;
+    public float meleerange;
     public bool isranged = false;
     public double attackCooldown=0;
     public float baseThreat=10;
@@ -38,7 +39,14 @@ public class AIstats : MonoBehaviour
             whattodrop = GameObject.Find("coin");
             usedefault = true;
         }
-        healthbar = transform.Find("Canvas").Find("healthbar").gameObject;
+        try
+        {
+            healthbar = transform.Find("Canvas").Find("healthbar").gameObject;
+        }
+        catch {
+            print("NO HEALTHBAR");
+        }
+        
     }
 
 
@@ -61,6 +69,7 @@ public class AIstats : MonoBehaviour
             }
         }
         
+        if(healthbar!= null)
         healthbar.transform.position = Camera.main.WorldToScreenPoint(anchor.position);
     }
     public void AIshootat(GameObject enemy)
@@ -72,7 +81,7 @@ public class AIstats : MonoBehaviour
         if (attackCooldown <= 0)
         {
             Vector3 source = this.transform.position;
-            Vector3 shootdirection = (enemy.transform.position - gameObject.transform.position).normalized;
+            Vector3 shootdirection = (enemy.transform.position - gun.transform.position).normalized;
             float angle = Mathf.Atan2(shootdirection.x, shootdirection.y) * Mathf.Rad2Deg;
             gun.transform.eulerAngles = new Vector3(0, 180, angle);
             if (shotgun)
@@ -105,8 +114,9 @@ public class AIstats : MonoBehaviour
         
         if (attackCooldown <= 0) {
             attackCooldown = 1 / attackSpeed;
-            
-            var a = Physics2D.OverlapCircleAll(gameObject.transform.position, 1);
+            if (meleerange > 5)
+                meleerange = 5;
+            var a = Physics2D.OverlapCircleAll(gameObject.transform.position, meleerange);
             foreach (var hit in a)
             {
                 if (NPC.GetComponent<AImovement>().Enemylist.Contains(hit.transform.tag))

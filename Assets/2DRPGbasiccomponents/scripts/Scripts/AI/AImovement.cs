@@ -54,28 +54,52 @@ public class AImovement : MonoBehaviour
     private float lastmovetime;
     [HideInInspector]
     public bool followerCommand=false;
+    GameObject gun;
 
     [HideInInspector]
     public string currentbehaviour="default";
     Vector2 lastpos; //The position (x,y) where the Player was seen last time by the AI 
     Vector2 lastPosition;
     Animator animator;
-
+    float firstxofgun;
     private void Start()
-    {
-        aIDestination = gameObject.GetComponent<AIDestinationSetter>();
+    { 
         AIqueue = GameObject.Find("Astarpath").GetComponent<AIqueue>();
         NPCobject = gameObject;
         renderer = gameObject.GetComponent<SpriteRenderer>();
-        astarAI = gameObject.GetComponent<IAstarAI>();
-        AIbase = gameObject.GetComponent<AIBase>();
-        seeker = gameObject.GetComponent<Seeker>();
-        AIPath = gameObject.GetComponent<AIPath>();
+        if (TryGetComponent<IAstarAI>(out IAstarAI astar))
+        {
+            astarAI = astar;
+            AIPath = gameObject.GetComponent<AIPath>();
+            seeker = gameObject.GetComponent<Seeker>();
+
+        }
+        else
+        {
+            AIPath = gameObject.AddComponent<AIPath>();
+            seeker = gameObject.GetComponent<Seeker>();
+            astarAI = gameObject.GetComponent<IAstarAI>();
+        }
+
+        if(TryGetComponent<AIDestinationSetter>(out AIDestinationSetter ads))
+        {
+            aIDestination = ads;
+            
+        }
+        else
+        {
+           aIDestination= gameObject.AddComponent<AIDestinationSetter>();
+        }
         aIDestination.target = gameObject.transform;
 
         AIPath.orientation = OrientationMode.YAxisForward;
         AIPath.enableRotation = false;
         AIPath.maxSpeed = baseSpeed;
+        AIPath.gravity = new Vector3(0, 0, 0);
+
+        gun = gameObject.transform.Find("gun").gameObject;
+        if (gun != null)
+            firstxofgun = transform.position.x - gun.transform.position.x  ;
 
         //without this AI starts travelling towards (0,0,0) when he spawns, do not change this
         owner = NPCobject;
@@ -94,7 +118,7 @@ public class AImovement : MonoBehaviour
     }
 
     //update is only executed on server (30 ticks per second)
-
+   
     void Update()
     {
         checkOwner();
@@ -130,18 +154,23 @@ public class AImovement : MonoBehaviour
         else
         {
             var a = astarAI.destination.x - lastpos.x;
-            print(a + gameObject.name);
+ 
             if (a != 0)
             {
-                      if (a < 0f)
+                if (a < 0f)
                 {
                     renderer.flipX = !flip2;
                     lastpos.x = gameObject.transform.position.x;
+                    if (gun != null)
+                        gun.transform.position = new Vector3((firstxofgun *-1 + transform.position.x) , gun.transform.position.y, 0);
+
                 }
                 else
-                {
+                {        
                     renderer.flipX = flip2;
                     lastpos.x = gameObject.transform.position.x;
+                    if (gun != null)
+                        gun.transform.position = new Vector3((firstxofgun  + transform.position.x), gun.transform.position.y, 0);
                 }
             }
             lastpos.x = gameObject.transform.position.x;

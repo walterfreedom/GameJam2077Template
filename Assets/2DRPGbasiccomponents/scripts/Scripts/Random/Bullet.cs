@@ -12,6 +12,7 @@ public class Bullet : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip audio;
     public bool wallblock = false;
+    public GameObject spawns;
     private void Start()
     {
         gameObject.GetComponent<Rigidbody2D>().velocity=transform.up*20;
@@ -46,8 +47,13 @@ public class Bullet : MonoBehaviour
                 {
                     nothit = false;
                     collision.gameObject.GetComponent<Stats>().DamageOrKill(damage, collision.gameObject, 5, shooter);
-                    Destroy(gameObject);
-              
+                    if (spawns != null)
+                    {
+                        var a =Instantiate(spawns);
+                        a.transform.position = gameObject.transform.position;
+                    }
+
+                Destroy(gameObject);
                 }
             }
 
@@ -66,6 +72,11 @@ public class Bullet : MonoBehaviour
        
     }
 
+    IEnumerator toDestroy()
+    {
+        yield return new WaitForEndOfFrame();
+        Destroy(gameObject);
+    }
 
     private void plsdontflyforever()
     {
